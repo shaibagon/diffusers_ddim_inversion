@@ -28,8 +28,8 @@ def ddim_inversion(imgname: str, num_steps: int = 50, verify: Optional[bool] = F
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     dtype = torch.float16
 
-    inverse_scheduler = DDIMInverseScheduler.from_pretrained('stabilityai/stable-diffusion-2-1', subfolder='scheduler')
-    pipe = StableDiffusionPipeline.from_pretrained('stabilityai/stable-diffusion-2-1',
+    inverse_scheduler = DDIMInverseScheduler.from_pretrained('Manojb/stable-diffusion-2-1-base', subfolder='scheduler')
+    pipe = StableDiffusionPipeline.from_pretrained('Manojb/stable-diffusion-2-1-base',
                                                    scheduler=inverse_scheduler,
                                                    safety_checker=None,
                                                    torch_dtype=dtype)
@@ -46,7 +46,7 @@ def ddim_inversion(imgname: str, num_steps: int = 50, verify: Optional[bool] = F
 
     # verify
     if verify:
-        pipe.scheduler = DDIMScheduler.from_pretrained('stabilityai/stable-diffusion-2-1', subfolder='scheduler')
+        pipe.scheduler = DDIMScheduler.from_pretrained('Manojb/stable-diffusion-2-1-base', subfolder='scheduler')
         image = pipe(prompt="", negative_prompt="", guidance_scale=1.,
                      num_inference_steps=num_steps, latents=inv_latents)
         fig, ax = plt.subplots(1, 2)
